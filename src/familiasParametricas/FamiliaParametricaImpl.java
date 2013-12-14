@@ -1,6 +1,6 @@
 package familiasParametricas;
 
-public class FamiliaParametricaImpl implements FamiliaParametrica {
+public abstract class FamiliaParametricaImpl implements FamiliaParametrica {
 private Double mu;
 	
 	public FamiliaParametricaImpl(){
@@ -25,9 +25,7 @@ private Double mu;
 	
 	
 
-	public Double getValue(Double x){
-		return 0.0;
-	}
+	public abstract Double getValue(Double x);
 
 
 	public double[] getOrbita(Double x0, Integer iteraciones, Integer iteracionesMax) {
