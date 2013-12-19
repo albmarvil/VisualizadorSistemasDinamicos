@@ -2,6 +2,8 @@ package charts;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,10 @@ public class Red {
 	private Integer iteracionesMax;
 	private Double x0;
 	
+	
+	private Double cortemin;
+	private Double cortemax;
+	
 	public Red(FamiliaParametrica fp, Double x0, Integer iteraciones, Integer iteracionesMax){
 		this.fp = fp;
 		this.iteraciones = iteraciones;
@@ -35,6 +41,7 @@ public class Red {
 		
 		List<Double> xs = new ArrayList<Double>();
 		List<Double> ys = new ArrayList<Double>();
+//		Double limit = Math.sqrt(2);
 		for(double i=-2; i<=2; i = i + 0.001){
 			xs.add(i);
 			ys.add(fp.getValue(i));
@@ -48,6 +55,15 @@ public class Red {
 			yp[i] = ys.get(i);
 		}
 		double[] orbita = fp.getOrbita(x0, iteraciones, iteracionesMax);
+		List<Double> orbita_aux = new ArrayList<Double>();
+		for(int i=0; i<orbita.length; i++){
+			orbita_aux.add(orbita[i]);
+		}
+		this.cortemax = Collections.max(orbita_aux);
+		this.cortemin = Collections.min(orbita_aux);
+		//sumamos un 10% a los cortes de los ejes
+		this.cortemax = this.cortemax + this.cortemax*0.1;
+		this.cortemin = this.cortemin + this.cortemin*0.1;
 		
 		if(iteraciones==0){//En este caso pintamos el principio de forma distinta
 			double[][] v = {{orbita[0],0},{orbita[0],orbita[1]}};
@@ -99,6 +115,8 @@ public class Red {
 			plot.changePlotColor(j+1, Color.RED);			
 		}
 		
+		plot.setFixedBounds(0,this.cortemin,this.cortemax);
+		plot.setFixedBounds(1, this.cortemin, this.cortemax);
 		JFrame frame = new JFrame("Red");
 		frame.setContentPane(plot);
 		frame.setSize(500, 500);
