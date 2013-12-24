@@ -2,18 +2,15 @@ package charts;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 import org.math.plot.Plot2DPanel;
 
-import familiasParametricas.FamiliaCuadraticaImpl;
 import familiasParametricas.FamiliaParametrica;
 
 public class Red {
@@ -28,12 +25,18 @@ public class Red {
 	
 	private Double cortemin;
 	private Double cortemax;
+	private boolean ajustado;
 	
 	public Red(FamiliaParametrica fp, Double x0, Integer iteraciones, Integer iteracionesMax){
 		this.fp = fp;
 		this.iteraciones = iteraciones;
 		this.iteracionesMax = iteracionesMax;
 		this.x0 = x0;
+		if(iteraciones == 0){
+			this.ajustado = false;
+		}else{
+			this.ajustado = true;
+		}
 		this.red = new LinkedHashMap<double[][],double[][]>();
 	}
 	
@@ -41,7 +44,7 @@ public class Red {
 		
 		List<Double> xs = new ArrayList<Double>();
 		List<Double> ys = new ArrayList<Double>();
-//		Double limit = Math.sqrt(2);
+
 		for(double i=-2; i<=2; i = i + 0.001){
 			xs.add(i);
 			ys.add(fp.getValue(i));
@@ -55,15 +58,21 @@ public class Red {
 			yp[i] = ys.get(i);
 		}
 		double[] orbita = fp.getOrbita(x0, iteraciones, iteracionesMax);
-		List<Double> orbita_aux = new ArrayList<Double>();
-		for(int i=0; i<orbita.length; i++){
-			orbita_aux.add(orbita[i]);
+		//Ajuste de los limites del eje
+		if(this.ajustado){
+			List<Double> orbita_aux = new ArrayList<Double>();
+			for(int i=0; i<orbita.length; i++){
+				orbita_aux.add(orbita[i]);
+			}
+			this.cortemax = Collections.max(orbita_aux);
+			this.cortemin = Collections.min(orbita_aux);
+			//sumamos un 10% a los cortes de los ejes
+			this.cortemax = this.cortemax + this.cortemax*0.1;
+			this.cortemin = this.cortemin + this.cortemin*0.1;			
+		}else{
+			this.cortemax = 2.0;
+			this.cortemin = -2.0;
 		}
-		this.cortemax = Collections.max(orbita_aux);
-		this.cortemin = Collections.min(orbita_aux);
-		//sumamos un 10% a los cortes de los ejes
-		this.cortemax = this.cortemax + this.cortemax*0.1;
-		this.cortemin = this.cortemin + this.cortemin*0.1;
 		
 		if(iteraciones==0){//En este caso pintamos el principio de forma distinta
 			double[][] v = {{orbita[0],0},{orbita[0],orbita[1]}};
@@ -123,14 +132,4 @@ public class Red {
 //		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-//	public static void main(String[] args) {
-//		FamiliaParametrica fp = new FamiliaCuadraticaImpl(-1.);
-//		Double x0 = 1.;
-//		Integer iteracionesMax = 10;
-//		Integer iteraciones = 0;
-//		
-//		Red st= new Red(fp, x0, iteraciones, iteracionesMax);
-//		
-//		st.muestraChart();
-//	}
 }

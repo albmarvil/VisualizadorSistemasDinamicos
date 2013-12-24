@@ -1,24 +1,18 @@
 package gui;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SpringLayout;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JCheckBox;
-import javax.swing.JSpinner;
-import javax.swing.JLabel;
-import javax.swing.JTree;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.JTextField;
-import javax.swing.JFormattedTextField;
 
 import charts.Red;
 import charts.SerieTemporal;
@@ -113,7 +107,7 @@ public class GUI {
 		frmVisualizadorFamiliaCuadrtica.getContentPane().add(lblA);
 		
 		JLabel lblNewLabel = new JLabel("<html><b>f(x) = x<sup>2</sup> + mu</html>");
-		lblNewLabel.setBounds(174, 22, 105, 14);
+		lblNewLabel.setBounds(174, 22, 105, 34);
 		frmVisualizadorFamiliaCuadrtica.getContentPane().add(lblNewLabel);
 		
 		JButton button = new JButton("Visualizar");

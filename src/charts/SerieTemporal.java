@@ -1,11 +1,9 @@
 package charts;
 
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 import org.math.plot.Plot2DPanel;
 
-import familiasParametricas.FamiliaCuadraticaImpl;
 import familiasParametricas.FamiliaParametrica;
 
 public class SerieTemporal {
@@ -49,15 +47,4 @@ public class SerieTemporal {
 //		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
-	
-//	public static void main(String[] args) {
-//		FamiliaParametrica fp = new FamiliaCuadraticaImpl(-1.);
-//		Double x0 = -1.;
-//		Integer iteracionesMax = 10;
-//		Integer iteraciones = 0;
-//		
-//		SerieTemporal st= new SerieTemporal(fp, x0, iteraciones, iteracionesMax);
-//		
-//		st.muestraChart();
-//	}
 }
